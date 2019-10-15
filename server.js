@@ -61,9 +61,11 @@ const getSteamPrices = async () => {
 
 app.get("/steam-prices", async (req, res) => {
   console.log("GET From SERVER");
+  const https = require("https");
 
   const prices = await getSteamPrices();
 
+  res.writeHead(200);
   res.send(prices);
 });
 
