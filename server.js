@@ -69,4 +69,7 @@ app.get("/steam-prices", async (req, res) => {
   res.send(prices);
 });
 
-app.listen(1337);
+// eslint-disable-next-line no-undef
+app.listen(process.env.PORT || 1337, function(){
+  console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
+});
