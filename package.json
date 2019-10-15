@@ -1,0 +1,11 @@
+{
+  "name": "steam-market-pricing",
+  "version": "1.0.0",
+  "main": "server.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "express": "^4.17.1",
+    "qs": "^6.9.0"
+  }
+}
