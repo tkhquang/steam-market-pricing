@@ -61,12 +61,15 @@ const getSteamPrices = async () => {
 
 app.get("/steam-prices", async (req, res) => {
   console.log("GET From SERVER");
-  const https = require("https");
 
-  const prices = await getSteamPrices();
+  try {
+    const prices = await getSteamPrices();
 
-  res.writeHead(200);
-  res.send(prices);
+    res.writeHead(200);
+    res.send(prices);
+  } catch (error) {
+    console.error(error);
+  }
 });
 
 // eslint-disable-next-line no-undef
