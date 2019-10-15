@@ -65,7 +65,6 @@ app.get("/steam-prices", async (req, res) => {
   try {
     const prices = await getSteamPrices();
 
-    res.writeHead(200);
     res.send(prices);
   } catch (error) {
     console.error(error);
