@@ -52,7 +52,7 @@ const getSteamPrices = async () => {
         return qs.stringify(newParams);
       }
     }).then(res => {
-      return {...res.data, id: item.id, item: item.name};
+      return {...res.data, id: item.id, name: item.name};
     })));
   } catch (error) {
     console.error(error);
