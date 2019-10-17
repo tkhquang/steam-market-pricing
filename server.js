@@ -1,13 +1,13 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
-const axios = require("axios");
+const Axios = require("axios");
 const qs = require("qs");
 
 app.all("/*", function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "GET");
+  res.header("Access-Control-Allow-Methods", "GET, POST");
   next();
 });
 
@@ -42,7 +42,7 @@ const items = [
 const getSteamPrices = async () => {
   const baseUrl = "https://steamcommunity.com/market/priceoverview/";
   try {
-    return await Promise.all(items.map(item => axios.get(baseUrl, {
+    return await Promise.all(items.map(item => Axios.get(baseUrl, {
       params: {
         currency: config.DEFAULT_CURRENCY,
         appid: item.appid
@@ -60,7 +60,7 @@ const getSteamPrices = async () => {
 };
 
 app.get("/steam-prices", async (req, res) => {
-  console.log("GET From SERVER");
+  console.log("GET Steam Prices");
 
   try {
     const prices = await getSteamPrices();
@@ -68,10 +68,12 @@ app.get("/steam-prices", async (req, res) => {
     res.send(prices);
   } catch (error) {
     console.error(error);
+    res.status(error.status);
+    res.render("error", { error: error });
   }
 });
 
 // eslint-disable-next-line no-undef
-app.listen(process.env.PORT || 1337, function(){
+app.listen(process.env.PORT || 1337, function () {
   console.log("Express server listening on port %d in %s mode", this.address().port, app.settings.env);
 });
