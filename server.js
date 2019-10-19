@@ -19,7 +19,7 @@ const cache = new LRU(cacheOptions);
 // Empty the cache on start
 cache.reset();
 
-const proxyUrl = "process.env.PROXY_URL";
+const proxyUrl = process.env.PROXY_URL;
 
 app.all("/*", function(req, res, next) {
   const allowedOrigins = [
