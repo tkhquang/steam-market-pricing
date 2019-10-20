@@ -165,12 +165,15 @@ app.get("/api/v1/g2a-listings", async (req, res) => {
     });
   }
   try {
-    const data = await getG2aListings(query, req.headers);
+    const listings = await getG2aListings(query, req.headers);
 
     return res.status(200).send({
       success: "true",
       message: "get g2a listings successfully",
-      data
+      data: {
+        numFound: listings.numFound,
+        items: listings.docs
+      }
     });
   } catch (error) {
     console.error(error);
