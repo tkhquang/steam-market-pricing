@@ -165,14 +165,42 @@ app.get("/api/v1/g2a-listings", async (req, res) => {
     });
   }
   try {
-    const listings = await getG2aListings(query, req.headers);
+    const {numFound, docs} = await getG2aListings(query, req.headers);
+
+    // Filtered out all product with no active listing
+    const filtered = docs.filter(item => item.retailQty > 0);
+
+    if (!filtered.length && Number(numFound) > 0) {
+      return res.status(200).send({
+        success: "true",
+        message: "get g2a listings successfully",
+        data: {
+          numFound: numFound,
+          items: filtered,
+          message: "Product Not Available"
+        }
+      });
+    }
+
+    if (!filtered.length && !Number(numFound)) {
+      return res.status(200).send({
+        success: "true",
+        message: "get g2a listings successfully",
+        data: {
+          numFound: numFound,
+          items: filtered,
+          message: "Product Not Found"
+        }
+      });
+    }
 
     return res.status(200).send({
       success: "true",
       message: "get g2a listings successfully",
       data: {
-        numFound: listings.numFound,
-        items: listings.docs
+        numFound: numFound,
+        items: filtered,
+        message: "Product Found"
       }
     });
   } catch (error) {
