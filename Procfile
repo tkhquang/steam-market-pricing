@@ -1,1 +1,1 @@
-web: node server.js
+web: tsc && node ./build/app.js
