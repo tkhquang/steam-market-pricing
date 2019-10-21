@@ -10,7 +10,7 @@ const Axios = axios.create({
   timeout: 1500
 });
 
-const request = async (opts: object): Promise<any | Error> => {
+const request = async (opts: any): Promise<any | Error> => {
   try {
     const data = await Axios({ ...opts });
     return data;

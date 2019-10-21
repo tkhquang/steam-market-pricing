@@ -68,6 +68,17 @@ const sendResponse = (
   });
 };
 
+// eslint-disable-next-line prettier/prettier
+function pick<T, K extends keyof T>(obj: T, ...keys: K[]): Pick<T, K> {
+  const copy = {} as Pick<T, K>;
+
+  keys.forEach(key => {
+    copy[key] = obj[key]
+  });
+
+  return copy;
+}
+
 const getCache = async (key: string): Promise<unknown> => {
   try {
     const result = await cache.get(key);
@@ -190,12 +201,15 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
     const { numFound, docs } = result;
 
     // Filtered out all product with no active listing
-    const filtered = docs.filter(item => item.retailQty > 0);
+    // Then remove unneeded fields
+    const filtered = docs.filter(item => item.retailQty > 0).map(item => {
+      return pick(item, "id", "name", "slug") as listings.Listing;
+    });
 
     if (!filtered.length && Number(numFound) > 0) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
         numFound: numFound,
-        items: filtered,
+        listings: filtered,
         message: "Product Not Available"
       });
       return;
@@ -204,7 +218,7 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
     if (!filtered.length && !Number(numFound)) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
         numFound: numFound,
-        items: filtered,
+        listings: filtered,
         message: "Product Not Found"
       });
       return;
@@ -212,13 +226,8 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
 
     sendResponse(res, 200, true, "Get G2A listings successfully", {
       numFound: numFound,
-      items: filtered,
-      message: "Product Not Found",
-      data: {
-        numFound: numFound,
-        items: filtered,
-        message: "Product Found"
-      }
+      listings: filtered,
+      message: "Product Found",
     });
     return;
   } catch (error) {

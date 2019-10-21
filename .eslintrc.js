@@ -1,6 +1,7 @@
 module.exports = {
   root: true,
   parser:  "@typescript-eslint/parser",
+  // parser: "babel-eslint",
   extends: [
     "standard",
     "plugin:prettier/recommended",
@@ -17,6 +18,9 @@ module.exports = {
   parserOptions: {
     sourceType: "module",
     ecmaVersion:  2018,
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
   },
   "env": {
     "node": true,
