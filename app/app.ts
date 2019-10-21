@@ -252,7 +252,7 @@ const getG2aAuction = async (
     });
     const json = CircularJSON.stringify(response);
     const { data } = JSON.parse(json);
-    return data;
+    return pick(data, "id", "lowest_price" ) as auction.Auction;
   } catch (error) {
     console.log(error);
   }
