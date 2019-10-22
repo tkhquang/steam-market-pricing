@@ -7,7 +7,7 @@ interface Error {
 
 const Axios = axios.create({
   // baseURL: `${process.env.API}`
-  timeout: 1500
+  timeout: 15000
 });
 
 const request = async (opts: any): Promise<any | Error> => {
