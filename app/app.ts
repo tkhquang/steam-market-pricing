@@ -37,6 +37,9 @@ app.all("/*", function(req, res, next) {
 
   if (index > -1) {
     res.header("Access-Control-Allow-Origin", headers.origin);
+  } else {
+    // Fallback default
+    res.header("Access-Control-Allow-Origin", allowedOrigins[0]);
   }
 
   res.header(
