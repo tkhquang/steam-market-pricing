@@ -37,9 +37,6 @@ app.all("/*", function(req, res, next) {
 
   if (index > -1) {
     res.header("Access-Control-Allow-Origin", headers.origin);
-  } else {
-    // Fallback default
-    res.header("Access-Control-Allow-Origin", allowedOrigins[0]);
   }
 
   res.header(
@@ -195,6 +192,10 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
     sendResponse(res, 400, false, "Game title is required");
     return;
   }
+  if (!req.headers.origin) {
+    sendResponse(res, 407, false, "Proxy Authentication Required");
+    return;
+  }
   try {
     const result = await getG2aListings(query, req.headers);
     if (!result) {
@@ -265,6 +266,10 @@ app.get("/api/v1/g2a/auction", async (req, res) => {
   const { query } = req;
   if (!query.id) {
     sendResponse(res, 400, false, "Auction id is required");
+    return;
+  }
+  if (!req.headers.origin) {
+    sendResponse(res, 407, false, "Proxy Authentication Required");
     return;
   }
   try {
