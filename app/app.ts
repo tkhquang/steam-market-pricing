@@ -84,7 +84,7 @@ const getCache = async (key: string): Promise<unknown> => {
     const result = await cache.get(key);
     return result;
   } catch (err) {
-    console.log(err);
+    return Promise.reject(err);
   }
 };
 
@@ -129,7 +129,7 @@ const getSteamItems = (): Promise<steamPrices.PriceItem[]> | undefined => {
       )
     );
   } catch (error) {
-    console.error(error);
+    return Promise.reject(error);
   }
 };
 
@@ -182,7 +182,7 @@ const getG2aListings = async (
     const { data } = JSON.parse(json);
     return data;
   } catch (error) {
-    console.log(error);
+    return Promise.reject(error);
   }
 };
 
@@ -212,26 +212,31 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
 
     if (!filtered.length && Number(numFound) > 0) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
-        numFound: numFound,
-        listings: filtered,
-        message: "Product Not Available"
+        data: {
+          numFound: numFound,
+          listings: filtered,
+          message: "Product Not Available"}
       });
       return;
     }
 
     if (!filtered.length && !Number(numFound)) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
-        numFound: numFound,
-        listings: filtered,
-        message: "Product Not Found"
+        data: {
+          numFound: numFound,
+          listings: filtered,
+          message: "Product Not Found"
+        }
       });
       return;
     }
 
     sendResponse(res, 200, true, "Get G2A listings successfully", {
-      numFound: numFound,
-      listings: filtered,
-      message: "Product Found",
+      data: {
+        numFound: numFound,
+        listings: filtered,
+        message: "Product Found",
+      }
     });
     return;
   } catch (error) {
@@ -258,7 +263,7 @@ const getG2aAuction = async (
     const { data } = JSON.parse(json);
     return pick({...data, id: params.id}, "id", "lowest_price" ) as auction.Auction;
   } catch (error) {
-    console.log(error);
+    return Promise.reject(error);
   }
 };
 

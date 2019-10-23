@@ -15,18 +15,7 @@ const request = async (opts: any): Promise<any | Error> => {
     const data = await Axios({ ...opts });
     return data;
   } catch (error) {
-    if (error.response) {
-      const { status, data } = error.response;
-      return {
-        code: status,
-        message: data.error ? data.error.message : data
-      };
-    }
-    const { statusCode, message } = error;
-    return {
-      code: statusCode,
-      message
-    };
+    return Promise.reject(error);
   }
 };
 
