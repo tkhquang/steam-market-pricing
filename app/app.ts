@@ -212,31 +212,26 @@ app.get("/api/v1/g2a/listings", async (req, res) => {
 
     if (!filtered.length && Number(numFound) > 0) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
-        data: {
-          numFound: numFound,
-          listings: filtered,
-          message: "Product Not Available"}
-      });
+        numFound: numFound,
+        listings: filtered,
+        message: "Product Not Available"}
+      );
       return;
     }
 
     if (!filtered.length && !Number(numFound)) {
       sendResponse(res, 200, true, "Get G2A listings successfully", {
-        data: {
-          numFound: numFound,
-          listings: filtered,
-          message: "Product Not Found"
-        }
+        numFound: numFound,
+        listings: filtered,
+        message: "Product Not Found"
       });
       return;
     }
 
     sendResponse(res, 200, true, "Get G2A listings successfully", {
-      data: {
-        numFound: numFound,
-        listings: filtered,
-        message: "Product Found",
-      }
+      numFound: numFound,
+      listings: filtered,
+      message: "Product Found",
     });
     return;
   } catch (error) {
