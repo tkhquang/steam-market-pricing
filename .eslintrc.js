@@ -1,12 +1,10 @@
 module.exports = {
   root: true,
   parser:  "@typescript-eslint/parser",
-  // parser: "babel-eslint",
   extends: [
     "standard",
     "plugin:prettier/recommended",
     "prettier",
-    "prettier/flowtype",
     "prettier/standard",
     "plugin:@typescript-eslint/recommended",
     "prettier/@typescript-eslint"
@@ -33,7 +31,6 @@ module.exports = {
     "prettier/prettier": [
       "error",
       {
-        parser: "flow",
         printWidth: 80,
         tabWidth: 2,
         useTabs: false,

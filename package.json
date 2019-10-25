@@ -1,16 +1,11 @@
 {
   "name": "steam-market-pricing",
   "version": "1.0.0",
-  "main": "server.js",
+  "main": "build/app.js",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/plugin-proposal-class-properties": "^7.5.5",
-    "@babel/plugin-proposal-optional-chaining": "^7.2.0",
-    "@babel/preset-env": "^7.5.5",
     "@typescript-eslint/eslint-plugin": "^2.4.0",
     "@typescript-eslint/parser": "^2.4.0",
-    "babel-eslint": "^10.0.2",
     "eslint": "^6.5.1",
     "eslint-config-prettier": "^6.1.0",
     "eslint-config-standard": "14.0.1",
@@ -31,13 +26,22 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "lru-cache": "^5.1.1",
+    "module-alias": "^2.2.2",
+    "nodemon": "^1.19.4",
     "qs": "^6.9.0",
-    "ts-node-dev": "^1.0.0-pre.43",
+    "ts-node": "^8.4.1",
     "typescript": "^3.6.4"
   },
   "scripts": {
     "tsc": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly ./app/app.ts",
-    "prod": "tsc && node ./build/app.js"
+    "clean": "rm -rf ./build",
+    "dev": "yarn clean && nodemon",
+    "prod": "yarn clean && tsc && node ./build/app.js"
+  },
+  "_moduleAliases": {
+    "@services": "build/services",
+    "@utils": "build/utils",
+    "@models": "build/models",
+    "@constants": "build/constants"
   }
 }

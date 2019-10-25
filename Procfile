@@ -1,1 +1,1 @@
-web: tsc && node ./build/app.js
+web: yarn prod

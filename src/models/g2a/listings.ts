@@ -6,8 +6,9 @@ export interface Listing {
 }
 
 export interface Listings {
-  numFound: number;
-  docs: Listing[];
+  total: number;
+  auctions: Listing[];
+  message: string;
 }
 
 export interface Params {

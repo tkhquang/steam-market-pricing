@@ -13,8 +13,8 @@ interface SetPriceParams extends Item {
 
 export interface PriceItem {
   [id: string]: {
-    lowest_price: number,
-    median_price: number,
-    name: string
+    lowest_price: number;
+    median_price: number;
+    name: string;
   };
 }
